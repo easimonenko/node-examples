@@ -3,3 +3,5 @@
 Examples for Node.js.
 
 - [MySQL](./mysql/README.md)
+
+- [PostgreSQL](./postgresql/README.md)

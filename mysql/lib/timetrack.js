@@ -159,8 +159,10 @@ function workHitListHtml(rows) {
 
     if (!rows[i].archived) {
       html += '<td>' + workArchiveForm(rows[i].id) + '</td>'
-      html += '</tr>'
     }
+
+    html += '<td>' + workDeleteForm(rows[i].id) + '</td>'
+    html += '</tr>'
   }
   html += '</table>'
 

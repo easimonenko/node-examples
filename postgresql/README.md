@@ -2,11 +2,17 @@
 
 ## postgresql
 
+Example for PostgreSQL based on "Node.js in Action" (Cantelon, Harter and others).
+
 - install PostgreSQL
 
 ``` sh
 sudo apt install postgresql postgresql-client postgresql-contrib
 ```
+
+- NPM-package:
+
+`pg`
 
 - create database
 

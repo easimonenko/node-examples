@@ -10,6 +10,12 @@ Example for MySQL based on "Node.js in Action" (Cantelon, Harter and others).
 sudo apt install mysql-server
 ```
 
+Also will be installed `mysql-client`.
+
+- NPM-package:
+
+`mysql`
+
 - create database
 
 ``` sh

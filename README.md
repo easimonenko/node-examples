@@ -9,3 +9,5 @@ Examples for Node.js.
 - [Redis](./redis/README.md)
 
 - [MongoDB](./mongodb/README.md)
+
+- [Mongoose](./mongoose/README.md)

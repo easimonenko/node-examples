@@ -11,3 +11,5 @@ Examples for Node.js.
 - [MongoDB](./mongodb/README.md)
 
 - [Mongoose](./mongoose/README.md)
+
+- [Socket.IO](./socket.io/README.md)

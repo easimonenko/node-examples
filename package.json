@@ -12,6 +12,7 @@
     "socket.io": "node ./socket.io",
     "fs-readline": "node ./fs-readline",
     "connect": "node ./connect",
+    "net-tcp": "node ./net-tcp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Evgeniy A. Simonenko <easimonenko@mail.ru>",

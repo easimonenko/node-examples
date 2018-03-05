@@ -17,3 +17,9 @@ Examples for Node.js.
 - [FS and ReadLine](./fs-readline/README.md)
 
 - [Net over TCP](./net-tcp/README.md)
+
+## License
+
+[![CC0 1.0 Universal](http://i.creativecommons.org/p/zero/1.0/88x31.png)](http://creativecommons.org/publicdomain/zero/1.0/)
+
+Creative Commons Zero 1.0 Universal. See [LICENSE](./LICENSE).

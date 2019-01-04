@@ -1,5 +1,7 @@
-import * as http from 'http'
-import * as socketio from 'socket.io'
+"use strict"
+
+const http = require('http')
+const socketio = require('socket.io')
 
 let io
 let guestNumber = 1
@@ -8,7 +10,7 @@ let namesUsed = []
 let currentRoom = {}
 
 /**
- * @param {http.Server} server 
+ * @param {http.Server} server
  */
 function listen(server) {
   io = socketio.listen(server)
@@ -33,7 +35,10 @@ exports.listen = listen
 function assignGuestName(socket, guestNumber, nickNames, namesUsed) {
   const name = 'Guest' + guestNumber
   nickNames[socket.id] = name
-  socket.emit('nameResult', {success: true, name: name})
+  socket.emit('nameResult', {
+    success: true,
+    name: name
+  })
   namesUsed.push(name)
 
   return guestNumber + 1
@@ -42,7 +47,9 @@ function assignGuestName(socket, guestNumber, nickNames, namesUsed) {
 function joinRoom(socket, room) {
   socket.join(room)
   currentRoom[socket.id] = room
-  socket.emit('joinResult', {room: room})
+  socket.emit('joinResult', {
+    room: room
+  })
   socket.broadcast.to(room).emit('message', {
     text: nickNames[socket.id] + ' has joined ' + room + '.'
   })
@@ -61,7 +68,9 @@ function joinRoom(socket, room) {
         }
       }
       usersInRoomSummary += '.'
-      socket.emit('message', {text: usersInRoomSummary})
+      socket.emit('message', {
+        text: usersInRoomSummary
+      })
     }
   })
 }
@@ -74,20 +83,21 @@ function handleNameChangeAttempts(socket, nickNames, namesUsed) {
         success: false,
         message: 'Names cannot begin with "Guest".'
       })
-    }
-    else {
+    } else {
       if (namesUsed.indexOf(name) == -1) {
         const previousName = nickNames[socket.id]
         const previousNameIndex = namesUsed.indexOf(previousName)
         namesUsed.push(name)
         nickNames[socket.id] = name
         delete namesUsed[previousNameIndex]
-        socket.emit('nameResult', {success: true, name: name})
+        socket.emit('nameResult', {
+          success: true,
+          name: name
+        })
         socket.broadcast.to(currentRoom[socket.id]).emit('message', {
           text: previousName + ' is now known as ' + name + '.'
         })
-      }
-      else {
+      } else {
         socket.emit('nameResult', {
           success: false,
           message: 'That name is already in use.'

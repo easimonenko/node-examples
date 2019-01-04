@@ -15,7 +15,7 @@ const server = http.createServer((req, res) => {
         case '/':
           work.add(db, req, res)
           break;
-        
+
         case '/archive':
           work.archive(db, req, res)
           break;
@@ -28,35 +28,35 @@ const server = http.createServer((req, res) => {
           break;
       }
       break;
-  
-  case 'GET':
-    switch (req.url) {
-      case '/':
-        work.show(db, res)
-        break;
-    
-      case '/archived':
-        work.showArchived(db, res)
-        break;
 
-      default:
-        break;
-    }
-    break;
+    case 'GET':
+      switch (req.url) {
+        case '/':
+          work.show(db, res)
+          break;
 
-  default:
-    break;
+        case '/archived':
+          work.showArchived(db, res)
+          break;
+
+        default:
+          break;
+      }
+      break;
+
+    default:
+      break;
   }
 })
 
 db.query(
-  "CREATE TABLE IF NOT EXISTS work ("
-  + "id INT(10) NOT NULL AUTO_INCREMENT, "
-  + "hours DECIMAL(5,2) DEFAULT 0, "
-  + "date DATE, "
-  + "archived INT(1) DEFAULT 0, "
-  + "description LONGTEXT, "
-  + "PRIMARY KEY(id))",
+  "CREATE TABLE IF NOT EXISTS work (" +
+  "id INT(10) NOT NULL AUTO_INCREMENT, " +
+  "hours DECIMAL(5,2) DEFAULT 0, " +
+  "date DATE, " +
+  "archived INT(1) DEFAULT 0, " +
+  "description LONGTEXT, " +
+  "PRIMARY KEY(id))",
   (err) => {
     if (err) {
       throw err

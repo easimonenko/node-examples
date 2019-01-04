@@ -1,3 +1,5 @@
+"use strict"
+
 const http = require('http')
 const work = require('./lib/timetrack')
 const mongoose = require('mongoose')
@@ -22,7 +24,7 @@ const server = http.createServer((req, res) => {
         case '/':
           work.add(mongoose, req, res)
           break;
-        
+
         case '/archive':
           work.archive(mongoose, req, res)
           break;
@@ -35,24 +37,24 @@ const server = http.createServer((req, res) => {
           break;
       }
       break;
-  
-  case 'GET':
-    switch (req.url) {
-      case '/':
-        work.show(mongoose, res)
-        break;
-    
-      case '/archived':
-        work.showArchived(mongoose, res)
-        break;
 
-      default:
-        break;
-    }
-    break;
+    case 'GET':
+      switch (req.url) {
+        case '/':
+          work.show(mongoose, res)
+          break;
 
-  default:
-    break;
+        case '/archived':
+          work.showArchived(mongoose, res)
+          break;
+
+        default:
+          break;
+      }
+      break;
+
+    default:
+      break;
   }
 })
 

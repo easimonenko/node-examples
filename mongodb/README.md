@@ -2,47 +2,41 @@
 
 ## mongodb
 
-Example for MongoDB based on "Node.js in Action" (Cantelon, Harter and others).
+Example for MongoDB based on example from "Node.js in Action" (Cantelon, Harter and others).
 
-- install MongoDB
-
-Full instructions see on
+First, install the MongoDB. Full instructions see on
 [official site](https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/).
 
-``` sh
+``` bash
 sudo apt install mongodb-org
 ```
 
-Also will be installed `mongodb-org-server`, `mongodb-org-mongos`,
-`mongodb-org-shell`, `mongodb-org-tools`.
+Also will be installed `mongodb-org-server`, `mongodb-org-mongos`, `mongodb-org-shell`, `mongodb-org-tools`.
 
-- run and stop MongoDB
+Run and stop MongoDB
 
 ``` sh
 sudo service mongod start
 sudo service mongod stop
 ```
 
-- NPM-package:
+NPM-packages: [`mongodb`](https://github.com/mongodb/node-mongodb-native),
+[`querystring`](https://nodejs.org/api/querystring.html).
 
-`mongodb`
+Create database: not required.
 
-- create database
+Create user: not required.
 
-Not required.
+Run server:
 
-- create user
-
-Not required.
-
-- run server
-
-``` sh
+``` bash
 npm run mongodb
 ```
 
-- open in browser
+or
 
-``` plain
-http://localhost:3000
+``` bash
+node timetrack-server.js
 ```
+
+Then open in browser <http://localhost:3000>

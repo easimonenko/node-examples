@@ -1,7 +1,7 @@
 "use strict";
 
-import * as fs from 'fs'
-import * as readline from 'readline'
+const fs = require('fs')
+const readline = require('readline')
 
 /** @global process */
 
@@ -11,10 +11,10 @@ const rl = readline.createInterface(process.stdin, process.stdout)
 rl.setPrompt('> ')
 rl.prompt()
 
-rl.on('line', /** @param {string} line */(line) => {
+rl.on('line', /** @param {string} line */ (line) => {
   const words = line.split(' ')
   const command = words[0]
-  switch(command) {
+  switch (command) {
     case 'help':
       console.log('pwd')
       console.log('ls')
@@ -26,99 +26,102 @@ rl.on('line', /** @param {string} line */(line) => {
       console.log('cp FILE_SRC FILE_DST')
       console.log('rm FILE')
       break
-    case 'pwd': {
-      const path = process.cwd()
-      console.log(path)
-      break
-    }
-    case 'ls': {
-      const path = process.cwd()
-      const stats = fs.statSync(path)
-      if(stats.isDirectory()) {
-        const fileNames = fs.readdirSync(path)
-        fileNames.forEach(function(fileName) {
-          console.log(fileName)
-        }, this);
+    case 'pwd':
+      {
+        const path = process.cwd()
+        console.log(path)
+        break
       }
-      else {
-        console.log('Unknown directory: ' + path)
+    case 'ls':
+      {
+        const path = process.cwd()
+        const stats = fs.statSync(path)
+        if (stats.isDirectory()) {
+          const fileNames = fs.readdirSync(path)
+          fileNames.forEach(function (fileName) {
+            console.log(fileName)
+          }, this);
+        } else {
+          console.log('Unknown directory: ' + path)
+        }
+        break
       }
-      break
-    }
-    case 'cd': {
-      const path = words.slice(1).join(' ')
-      const stats = fs.statSync(path)
-      if(stats.isDirectory()) {
-        process.chdir(path)
+    case 'cd':
+      {
+        const path = words.slice(1).join(' ')
+        const stats = fs.statSync(path)
+        if (stats.isDirectory()) {
+          process.chdir(path)
+        } else {
+          console.log('Unknown directory: ' + path)
+        }
+        break
       }
-      else {
-        console.log('Unknown directory: ' + path)
+    case 'mkdir':
+      {
+        const path = words.slice(1).join(' ')
+        try {
+          fs.mkdirSync(path)
+        } catch (err) {
+          console.log(err)
+        }
+        break
       }
-      break
-    }
-    case 'mkdir': {
-      const path = words.slice(1).join(' ')
-      try {
-        fs.mkdirSync(path)
+    case 'rmdir':
+      {
+        const path = words.slice(1).join(' ')
+        try {
+          fs.rmdirSync(path)
+        } catch (err) {
+          console.log(err)
+        }
+        break
       }
-      catch (err) {
-        console.log(err)
+    case 'cat':
+      {
+        const path = words.slice(1).join(' ')
+        try {
+          const content = fs.readFileSync(path, 'utf8')
+          console.log(content)
+        } catch (err) {
+          console.log(err)
+        }
+        break
       }
-      break
-    }
-    case 'rmdir': {
-      const path = words.slice(1).join(' ')
-      try {
-        fs.rmdirSync(path)
+    case 'touch':
+      {
+        const path = words.slice(1).join(' ')
+        try {
+          const fd = fs.openSync(path, 'w')
+        } catch (err) {
+          console.log(err)
+        }
+        break
       }
-      catch (err) {
-        console.log(err)
+    case 'cp':
+      {
+        const input = fs.createReadStream(words[1])
+        const output = fs.createWriteStream(words[2])
+        input.on('data', (data) => {
+          output.write(data)
+        })
+        break
       }
-      break
-    }
-    case 'cat': {
-      const path = words.slice(1).join(' ')
-      try {
-        const content = fs.readFileSync(path, 'utf8')
-        console.log(content)
+    case 'rm':
+      {
+        const path = words.slice(1).join(' ')
+        try {
+          fs.unlinkSync(path)
+        } catch (err) {
+          console.log(err)
+        }
+        break
       }
-      catch (err) {
-        console.log(err)
+    default:
+      {
+        console.log('Print `help` for command list.')
+        break
       }
-      break
-    }
-    case 'touch': {
-      const path = words.slice(1).join(' ')
-      try {
-        const fd = fs.openSync(path, 'w')
-      }
-      catch (err) {
-        console.log(err)
-      }
-      break
-    }
-    case 'cp': {
-      const input = fs.createReadStream(words[1])
-      const output = fs.createWriteStream(words[2])
-      input.on('data', (data) => {
-        output.write(data)
-      })
-      break
-    }
-    case 'rm': {
-      const path = words.slice(1).join(' ')
-      try {
-        fs.unlinkSync(path)
-      }
-      catch (err) {
-        console.log(err)
-      }
-      break
-    }
-    default: {
-      console.log('Print `help` for command list.')
-      break
-    }
   }
   rl.prompt()
 })

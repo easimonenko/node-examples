@@ -1,13 +1,13 @@
 'use strict';
 
-import * as http from 'http'
-import * as querystring from 'querystring'
-import * as redis from 'redis'
-import * as uuid from 'uuid'
+const http = require('http')
+const querystring = require('querystring')
+const redis = require('redis')
+const uuid = require('uuid')
 
 /**
- * @param {http.ServerResponse} res 
- * @param {string} html 
+ * @param {http.ServerResponse} res
+ * @param {string} html
  */
 function sendHtml(res, html) {
   res.setHeader('Content-Type', 'text/html')
@@ -36,20 +36,20 @@ exports.parseReceivedData = parseReceivedData
 
 function actionForm(id, path, label) {
   const html =
-    '<form method="POST" action="' + path + '">'
-    + '<input type="hidden" name="id" value="' + id + '"/>'
-    + '<input type="submit" value="' + label + '"/>'
-    + '</form>'
-  
+    '<form method="POST" action="' + path + '">' +
+    '<input type="hidden" name="id" value="' + id + '"/>' +
+    '<input type="submit" value="' + label + '"/>' +
+    '</form>'
+
   return html
 }
 
 exports.actionForm = actionForm
 
 /**
- * @param {redis.RedisClient} db 
- * @param {http.IncomingMessage} req 
- * @param {http.ServerResponse} res 
+ * @param {redis.RedisClient} db
+ * @param {http.IncomingMessage} req
+ * @param {http.ServerResponse} res
  */
 function add(db, req, res) {
   parseReceivedData(req, (work) => {
@@ -70,9 +70,9 @@ function add(db, req, res) {
 exports.add = add
 
 /**
- * @param {redis.RedisClient} db 
- * @param {http.IncomingMessage} req 
- * @param {http.ServerResponse} res 
+ * @param {redis.RedisClient} db
+ * @param {http.IncomingMessage} req
+ * @param {http.ServerResponse} res
  */
 function deleteWork(db, req, res) {
   parseReceivedData(req, (work) => {
@@ -90,9 +90,9 @@ function deleteWork(db, req, res) {
 exports.deleteWork = deleteWork
 
 /**
- * @param {redis.RedisClient} db 
- * @param {http.IncomingMessage} req 
- * @param {http.ServerResponse} res 
+ * @param {redis.RedisClient} db
+ * @param {http.IncomingMessage} req
+ * @param {http.ServerResponse} res
  */
 function archive(db, req, res) {
   parseReceivedData(req, (work) => {
@@ -125,13 +125,13 @@ function archive(db, req, res) {
 exports.archive = archive
 
 /**
- * @param {redis.RedisClient} db 
- * @param {http.ServerResponse} res 
- * @param {boolean} showArchived 
+ * @param {redis.RedisClient} db
+ * @param {http.ServerResponse} res
+ * @param {boolean} showArchived
  */
 function show(db, res, showArchived) {
   const archiveValue = (showArchived) ? 1 : 0
-  
+
   db.lrange('work:ids', 0, -1, (err, items) => {
     if (err) {
       throw err
@@ -162,14 +162,13 @@ function show(db, res, showArchived) {
     setTimeout(function repeat() {
       if (counter == items.length) {
         var html =
-          (showArchived)
-          ? ''
-          : '<a href="/archived">Archived Work</a><br/>'
+          (showArchived) ?
+          '' :
+          '<a href="/archived">Archived Work</a><br/>'
         html += workHitListHtml(work)
         html += workFormHtml()
         sendHtml(res, html)
-      }
-      else {
+      } else {
         setTimeout(repeat, 0)
       }
     }, 0)
@@ -179,8 +178,8 @@ function show(db, res, showArchived) {
 exports.show = show
 
 /**
- * @param {redis.RedisClient} db 
- * @param {http.ServerResponse} res 
+ * @param {redis.RedisClient} db
+ * @param {http.ServerResponse} res
  */
 function showArchived(db, res) {
   show(db, res, true)
@@ -215,15 +214,15 @@ exports.workHitListHtml = workHitListHtml
 
 function workFormHtml() {
   var html =
-    '<form method="POST" action="/">'
-    + '<p>Date (YYYY-MM-DD):<br/><input name="date" type="text"></p>'
-    + '<p>Hours worked:<br/><input name="hours" type="text"></p>'
-    + '<p>Description:</br>'
-    + '<textarea name="description"></textarea>'
-    + '</p>'
-    + '<input type="submit" value="Add" />'
-    + '</form>'
-  
+    '<form method="POST" action="/">' +
+    '<p>Date (YYYY-MM-DD):<br/><input name="date" type="text"></p>' +
+    '<p>Hours worked:<br/><input name="hours" type="text"></p>' +
+    '<p>Description:</br>' +
+    '<textarea name="description"></textarea>' +
+    '</p>' +
+    '<input type="submit" value="Add" />' +
+    '</form>'
+
   return html
 }
 

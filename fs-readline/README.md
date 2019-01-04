@@ -2,18 +2,21 @@
 
 ## fs-readline
 
-Example for FS and ReadLine as a shell command line.
+Example for modules [FS](https://nodejs.org/api/fs.html) and [ReadLine](https://nodejs.org/api/readline.html) as a
+shell command line.
 
-[FS](https://nodejs.org/api/fs.html)
-
-[ReadLine](https://nodejs.org/api/readline.html)
-
-- NPM-package:
+NPM-packages:
 
 This is the standard packages.
 
-- run server
+Run server:
 
-``` sh
+``` bash
 npm run fs-readline
+```
+
+or
+
+``` bash
+node program.js
 ```

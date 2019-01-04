@@ -1,11 +1,11 @@
 'use strict';
 
-import * as http from 'http'
-import * as querystring from 'querystring'
+const http = require('http')
+const querystring = require('querystring')
 
 /**
- * @param {http.ServerResponse} res 
- * @param {string} html 
+ * @param {http.ServerResponse} res
+ * @param {string} html
  */
 function sendHtml(res, html) {
   res.setHeader('Content-Type', 'text/html')
@@ -34,11 +34,11 @@ exports.parseReceivedData = parseReceivedData
 
 function actionForm(id, path, label) {
   const html =
-    '<form method="POST" action="' + path + '">'
-    + '<input type="hidden" name="id" value="' + id + '"/>'
-    + '<input type="submit" value="' + label + '"/>'
-    + '</form>'
-  
+    '<form method="POST" action="' + path + '">' +
+    '<input type="hidden" name="id" value="' + id + '"/>' +
+    '<input type="submit" value="' + label + '"/>' +
+    '</form>'
+
   return html
 }
 
@@ -46,8 +46,8 @@ exports.actionForm = actionForm
 
 /**
  * @param {} mongoose
- * @param {http.IncomingMessage} req 
- * @param {http.ServerResponse} res 
+ * @param {http.IncomingMessage} req
+ * @param {http.ServerResponse} res
  */
 function add(mongoose, req, res) {
   parseReceivedData(req, (_work) => {
@@ -59,13 +59,12 @@ function add(mongoose, req, res) {
     work.archived = 0
     work.description = _work.description
     work.save((err) => {
-        if (err) {
-          throw err
-        }
-        console.log(work._id)
-        show(mongoose, res)
+      if (err) {
+        throw err
       }
-    )
+      console.log(work._id)
+      show(mongoose, res)
+    })
   })
 }
 
@@ -73,8 +72,8 @@ exports.add = add
 
 /**
  * @param {} mongoose
- * @param {http.IncomingMessage} req 
- * @param {http.ServerResponse} res 
+ * @param {http.IncomingMessage} req
+ * @param {http.ServerResponse} res
  */
 function deleteWork(mongoose, req, res) {
   parseReceivedData(req, (_work) => {
@@ -97,17 +96,20 @@ exports.deleteWork = deleteWork
 
 /**
  * @param {} mongoose
- * @param {http.IncomingMessage} req 
- * @param {http.ServerResponse} res 
+ * @param {http.IncomingMessage} req
+ * @param {http.ServerResponse} res
  */
 function archive(mongoose, req, res) {
   parseReceivedData(req, (_work) => {
     console.log(_work.id)
     const Work = mongoose.model('Work')
-    Work.update(
-      {'_id': _work.id},
-      {'archived': 1},
-      {multi: false},
+    Work.update({
+        '_id': _work.id
+      }, {
+        'archived': 1
+      }, {
+        multi: false
+      },
       (err, result) => {
         if (err) {
           throw err
@@ -123,12 +125,20 @@ exports.archive = archive
 
 /**
  * @param {} mongoose
- * @param {http.ServerResponse} res 
- * @param {boolean} showArchived 
+ * @param {http.ServerResponse} res
+ * @param {boolean} showArchived
  */
 function show(mongoose, res, showArchived) {
   const archiveValue = (showArchived) ? 1 : 0
-  const query = archiveValue == 1 ? {'archived': 1} : {$or: [{'archived': 0}, {'archived': null}]}
+  const query = archiveValue == 1 ? {
+    'archived': 1
+  } : {
+    $or: [{
+      'archived': 0
+    }, {
+      'archived': null
+    }]
+  }
   const Work = mongoose.model('Work')
   Work.find(query, (err, docs) => {
     if (err) {
@@ -136,9 +146,9 @@ function show(mongoose, res, showArchived) {
     }
 
     var html =
-      (showArchived)
-      ? ''
-      : '<a href="/archived">Archived Work</a><br/>'
+      (showArchived) ?
+      '' :
+      '<a href="/archived">Archived Work</a><br/>'
     html += workHitListHtml(docs)
     html += workFormHtml()
     sendHtml(res, html)
@@ -149,7 +159,7 @@ exports.show = show
 
 /**
  * @param {} mongoose
- * @param {http.ServerResponse} res 
+ * @param {http.ServerResponse} res
  */
 function showArchived(mongoose, res) {
   show(mongoose, res, true)
@@ -181,15 +191,15 @@ exports.workHitListHtml = workHitListHtml
 
 function workFormHtml() {
   var html =
-    '<form method="POST" action="/">'
-    + '<p>Date (YYYY-MM-DD):<br/><input name="date" type="text"></p>'
-    + '<p>Hours worked:<br/><input name="hours" type="text"></p>'
-    + '<p>Description:</br>'
-    + '<textarea name="description"></textarea>'
-    + '</p>'
-    + '<input type="submit" value="Add" />'
-    + '</form>'
-  
+    '<form method="POST" action="/">' +
+    '<p>Date (YYYY-MM-DD):<br/><input name="date" type="text"></p>' +
+    '<p>Hours worked:<br/><input name="hours" type="text"></p>' +
+    '<p>Description:</br>' +
+    '<textarea name="description"></textarea>' +
+    '</p>' +
+    '<input type="submit" value="Add" />' +
+    '</form>'
+
   return html
 }
 

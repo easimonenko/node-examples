@@ -1,11 +1,11 @@
 'use strict';
 
-import * as http from 'http'
-import * as querystring from 'querystring'
+const http = require('http')
+const querystring = require('querystring')
 
 /**
- * @param {http.ServerResponse} res 
- * @param {string} html 
+ * @param {http.ServerResponse} res
+ * @param {string} html
  */
 function sendHtml(res, html) {
   res.setHeader('Content-Type', 'text/html')
@@ -34,26 +34,26 @@ exports.parseReceivedData = parseReceivedData
 
 function actionForm(id, path, label) {
   const html =
-    '<form method="POST" action="' + path + '">'
-    + '<input type="hidden" name="id" value="' + id + '"/>'
-    + '<input type="submit" value="' + label + '"/>'
-    + '</form>'
-  
+    '<form method="POST" action="' + path + '">' +
+    '<input type="hidden" name="id" value="' + id + '"/>' +
+    '<input type="submit" value="' + label + '"/>' +
+    '</form>'
+
   return html
 }
 
 exports.actionForm = actionForm
 
 /**
- * @param {IConnection} db 
- * @param {http.IncomingMessage} req 
- * @param {http.ServerResponse} res 
+ * @param {IConnection} db
+ * @param {http.IncomingMessage} req
+ * @param {http.ServerResponse} res
  */
 function add(db, req, res) {
   parseReceivedData(req, (work) => {
     db.query(
-      "INSERT INTO work (hours, date, description) "
-      + "VALUES ($1, $2, $3)",
+      "INSERT INTO work (hours, date, description) " +
+      "VALUES ($1, $2, $3)",
       [work.hours, work.date, work.description],
       (err) => {
         if (err) {
@@ -69,9 +69,9 @@ function add(db, req, res) {
 exports.add = add
 
 /**
- * @param {IConnection} db 
- * @param {http.IncomingMessage} req 
- * @param {http.ServerResponse} res 
+ * @param {IConnection} db
+ * @param {http.IncomingMessage} req
+ * @param {http.ServerResponse} res
  */
 function deleteWork(db, req, res) {
   parseReceivedData(req, (work) => {
@@ -92,9 +92,9 @@ function deleteWork(db, req, res) {
 exports.deleteWork = deleteWork
 
 /**
- * @param {IConnection} db 
- * @param {http.IncomingMessage} req 
- * @param {http.ServerResponse} res 
+ * @param {IConnection} db
+ * @param {http.IncomingMessage} req
+ * @param {http.ServerResponse} res
  */
 function archive(db, req, res) {
   parseReceivedData(req, (work) => {
@@ -115,9 +115,9 @@ function archive(db, req, res) {
 exports.archive = archive
 
 /**
- * @param {IConnection} db 
- * @param {http.ServerResponse} res 
- * @param {boolean} showArchived 
+ * @param {IConnection} db
+ * @param {http.ServerResponse} res
+ * @param {boolean} showArchived
  */
 function show(db, res, showArchived) {
   const query = "SELECT * FROM work WHERE archived=$1 ORDER BY date DESC"
@@ -128,9 +128,9 @@ function show(db, res, showArchived) {
     }
 
     var html =
-      (showArchived)
-      ? ''
-      : '<a href="/archived">Archived Work</a><br/>'
+      (showArchived) ?
+      '' :
+      '<a href="/archived">Archived Work</a><br/>'
     html += workHitListHtml(dbRes.rows)
     html += workFormHtml()
     sendHtml(res, html)
@@ -140,8 +140,8 @@ function show(db, res, showArchived) {
 exports.show = show
 
 /**
- * @param {IConnection} db 
- * @param {http.ServerResponse} res 
+ * @param {IConnection} db
+ * @param {http.ServerResponse} res
  */
 function showArchived(db, res) {
   show(db, res, true)
@@ -173,15 +173,15 @@ exports.workHitListHtml = workHitListHtml
 
 function workFormHtml() {
   var html =
-    '<form method="POST" action="/">'
-    + '<p>Date (YYYY-MM-DD):<br/><input name="date" type="text"></p>'
-    + '<p>Hours worked:<br/><input name="hours" type="text"></p>'
-    + '<p>Description:</br>'
-    + '<textarea name="description"></textarea>'
-    + '</p>'
-    + '<input type="submit" value="Add" />'
-    + '</form>'
-  
+    '<form method="POST" action="/">' +
+    '<p>Date (YYYY-MM-DD):<br/><input name="date" type="text"></p>' +
+    '<p>Hours worked:<br/><input name="hours" type="text"></p>' +
+    '<p>Description:</br>' +
+    '<textarea name="description"></textarea>' +
+    '</p>' +
+    '<input type="submit" value="Add" />' +
+    '</form>'
+
   return html
 }
 

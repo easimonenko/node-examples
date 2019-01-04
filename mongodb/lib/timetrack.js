@@ -1,12 +1,12 @@
 'use strict';
 
-import * as http from 'http'
-import * as mongodb from 'mongodb'
-import * as querystring from 'querystring'
+const http = require('http')
+const mongodb = require('mongodb')
+const querystring = require('querystring')
 
 /**
- * @param {http.ServerResponse} res 
- * @param {string} html 
+ * @param {http.ServerResponse} res
+ * @param {string} html
  */
 function sendHtml(res, html) {
   res.setHeader('Content-Type', 'text/html')
@@ -35,48 +35,48 @@ exports.parseReceivedData = parseReceivedData
 
 function actionForm(id, path, label) {
   const html =
-    '<form method="POST" action="' + path + '">'
-    + '<input type="hidden" name="id" value="' + id + '"/>'
-    + '<input type="submit" value="' + label + '"/>'
-    + '</form>'
-  
+    '<form method="POST" action="' + path + '">' +
+    '<input type="hidden" name="id" value="' + id + '"/>' +
+    '<input type="submit" value="' + label + '"/>' +
+    '</form>'
+
   return html
 }
 
 exports.actionForm = actionForm
 
 /**
- * @param {} db 
- * @param {http.IncomingMessage} req 
- * @param {http.ServerResponse} res 
+ * @param {} db
+ * @param {http.IncomingMessage} req
+ * @param {http.ServerResponse} res
  */
 function add(db, req, res) {
   parseReceivedData(req, (work) => {
     console.log(work)
     const collection = db.collection('work')
     collection.insert(work, (err, result) => {
-        if (err) {
-          throw err
-        }
-        console.log(result)
-        show(db, res)
+      if (err) {
+        throw err
       }
-    )
+      console.log(result)
+      show(db, res)
+    })
   })
 }
 
 exports.add = add
 
 /**
- * @param {} db 
- * @param {http.IncomingMessage} req 
- * @param {http.ServerResponse} res 
+ * @param {} db
+ * @param {http.IncomingMessage} req
+ * @param {http.ServerResponse} res
  */
 function deleteWork(db, req, res) {
   parseReceivedData(req, (work) => {
     const collection = db.collection('work')
-    collection.deleteOne(
-      {'_id': new mongodb.ObjectID(work.id)},
+    collection.deleteOne({
+        '_id': new mongodb.ObjectID(work.id)
+      },
       (err, result) => {
         if (err) {
           throw err
@@ -91,16 +91,20 @@ function deleteWork(db, req, res) {
 exports.deleteWork = deleteWork
 
 /**
- * @param {} db 
- * @param {http.IncomingMessage} req 
- * @param {http.ServerResponse} res 
+ * @param {} db
+ * @param {http.IncomingMessage} req
+ * @param {http.ServerResponse} res
  */
 function archive(db, req, res) {
   parseReceivedData(req, (work) => {
     const collection = db.collection('work')
-    collection.updateOne(
-      {'_id': new mongodb.ObjectID(work.id)},
-      {$set: {'archived': 1}},
+    collection.updateOne({
+        '_id': new mongodb.ObjectID(work.id)
+      }, {
+        $set: {
+          'archived': 1
+        }
+      },
       (err, result) => {
         if (err) {
           throw err
@@ -115,23 +119,31 @@ function archive(db, req, res) {
 exports.archive = archive
 
 /**
- * @param {} db 
- * @param {http.ServerResponse} res 
- * @param {boolean} showArchived 
+ * @param {} db
+ * @param {http.ServerResponse} res
+ * @param {boolean} showArchived
  */
 function show(db, res, showArchived) {
   const archiveValue = (showArchived) ? 1 : 0
   const collection = db.collection('work')
-  const query = archiveValue == 1 ? {'archived': 1} : {$or: [{'archived': 0}, {'archived': null}]}
+  const query = archiveValue == 1 ? {
+    'archived': 1
+  } : {
+    $or: [{
+      'archived': 0
+    }, {
+      'archived': null
+    }]
+  }
   collection.find(query).toArray((err, docs) => {
     if (err) {
       throw err
     }
 
     var html =
-      (showArchived)
-      ? ''
-      : '<a href="/archived">Archived Work</a><br/>'
+      (showArchived) ?
+      '' :
+      '<a href="/archived">Archived Work</a><br/>'
     html += workHitListHtml(docs)
     html += workFormHtml()
     sendHtml(res, html)
@@ -141,8 +153,8 @@ function show(db, res, showArchived) {
 exports.show = show
 
 /**
- * @param {} db 
- * @param {http.ServerResponse} res 
+ * @param {} db
+ * @param {http.ServerResponse} res
  */
 function showArchived(db, res) {
   show(db, res, true)
@@ -174,15 +186,15 @@ exports.workHitListHtml = workHitListHtml
 
 function workFormHtml() {
   var html =
-    '<form method="POST" action="/">'
-    + '<p>Date (YYYY-MM-DD):<br/><input name="date" type="text"></p>'
-    + '<p>Hours worked:<br/><input name="hours" type="text"></p>'
-    + '<p>Description:</br>'
-    + '<textarea name="description"></textarea>'
-    + '</p>'
-    + '<input type="submit" value="Add" />'
-    + '</form>'
-  
+    '<form method="POST" action="/">' +
+    '<p>Date (YYYY-MM-DD):<br/><input name="date" type="text"></p>' +
+    '<p>Hours worked:<br/><input name="hours" type="text"></p>' +
+    '<p>Description:</br>' +
+    '<textarea name="description"></textarea>' +
+    '</p>' +
+    '<input type="submit" value="Add" />' +
+    '</form>'
+
   return html
 }
 

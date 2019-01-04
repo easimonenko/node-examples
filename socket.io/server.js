@@ -1,7 +1,9 @@
-import * as fs from 'fs'
-import * as http from 'http'
+"use strict"
+
+const fs = require('fs')
+const http = require('http')
 const mime = require('mime')
-import * as path from 'path'
+const path = require('path')
 
 /**
  * @type {Object.<string, string>}
@@ -9,47 +11,48 @@ import * as path from 'path'
 const cache = {}
 
 /**
- * @param {http.ServerResponse} res 
+ * @param {http.ServerResponse} res
  */
 function send404(res) {
-  res.writeHead(404, {'Content-Type': 'text/plain'})
+  res.writeHead(404, {
+    'Content-Type': 'text/plain'
+  })
   res.write('Error 404: resource not found.')
   res.end()
 }
 
 /**
- * @param {http.ServerResponse} res 
- * @param {string} filePath 
- * @param {Buffer} fileContents 
+ * @param {http.ServerResponse} res
+ * @param {string} filePath
+ * @param {Buffer} fileContents
  */
 function sendFile(res, filePath, fileContents) {
-  res.writeHead(200, {'Content-Type': mime.lookup(path.basename(filePath))})
+  res.writeHead(200, {
+    'Content-Type': mime.lookup(path.basename(filePath))
+  })
   res.end(fileContents)
 }
 
 /**
- * @param {http.ServerResponse} res 
- * @param {Object.<string, string>} cache 
- * @param {string} absPath 
+ * @param {http.ServerResponse} res
+ * @param {Object.<string, string>} cache
+ * @param {string} absPath
  */
 function serveStatic(res, cache, absPath) {
   if (cache[absPath]) {
     sendFile(res, absPath, cache[absPath])
-  }
-  else {
+  } else {
     fs.exists(absPath, (exists) => {
       if (exists) {
         fs.readFile(absPath, (err, data) => {
           if (err) {
             send404(res)
-          }
-          else {
+          } else {
             cache[absPath] = data
             sendFile(res, absPath, data)
           }
         })
-      }
-      else {
+      } else {
         send404(res)
       }
     })

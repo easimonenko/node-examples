@@ -1,7 +1,7 @@
 "use strict";
 
-import * as events from 'events'
-import * as net from 'net'
+const events = require('events')
+const net = require('net')
 
 const MAX_LISTENERS = 10
 
@@ -10,14 +10,14 @@ channel.clients = {}
 channel.subscriptions = {}
 
 channel.on('join',
-  /** 
+  /**
    * @param {string} id
-   * @param {net.Socket} client 
+   * @param {net.Socket} client
    */
-  function(id, client) {
+  function (id, client) {
     console.log('Joined: ' + id)
     this.clients[id] = client
-    this.subscriptions[id] = function(senderId, message) {
+    this.subscriptions[id] = function (senderId, message) {
       if (id != senderId) {
         this.clients[id].write(message)
       }
@@ -30,7 +30,7 @@ channel.on('leave',
   /**
    * @param {string} id
    */
-  function(id) {
+  function (id) {
     channel.removeListener('broadcast', this.subscriptions[id])
     channel.emit('broadcast', id, id + ' has left the chat.\n')
   }

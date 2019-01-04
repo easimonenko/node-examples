@@ -2,24 +2,20 @@
 
 ## socket.io
 
-Example for Socket.IO based on "Node.js in Action" (Cantelon, Harter and others).
+Example for [Socket.IO](https://socket.io/) based on example from "Node.js in Action" (Cantelon, Harter and others).
 
-[Socket.IO](https://socket.io/)
+NPM-packages: [`socket.io`](https://socket.io/), [`mime`](https://github.com/broofa/node-mime).
 
-- NPM-package:
+Run server:
 
-`socket.io`
-
-Also need to be installed `mime`.
-
-- run server
-
-``` sh
+``` bash
 npm run socket.io
 ```
 
-- open in browser
+or
 
-``` plain
-http://localhost:3000
+``` bash
+node server.js
 ```
+
+Open in browser <http://localhost:3000>.

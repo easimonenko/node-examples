@@ -2,47 +2,40 @@
 
 ## mongoose
 
-Example for MongoDB with Mongoose based on "Node.js in Action" (Cantelon, Harter and others).
+Example for MongoDB with Mongoose based on example from "Node.js in Action" (Cantelon, Harter and others).
 
-- install MongoDB
-
-Full instructions see on
+First, install MongoDB. Full instructions see on
 [official site](https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/).
 
-``` sh
+``` bash
 sudo apt install mongodb-org
 ```
 
-Also will be installed `mongodb-org-server`, `mongodb-org-mongos`,
-`mongodb-org-shell`, `mongodb-org-tools`.
+Also will be installed `mongodb-org-server`, `mongodb-org-mongos`, `mongodb-org-shell`, `mongodb-org-tools`.
 
-- run and stop MongoDB
+Run and stop MongoDB:
 
-``` sh
+``` bash
 sudo service mongod start
 sudo service mongod stop
 ```
 
-- NPM-package:
+NPM-packages: [`mongoose`](https://mongoosejs.com/).
 
-`mongoose`
+Create database: not required.
 
-- create database
+Create user: not required.
 
-Not required.
+Run server:
 
-- create user
-
-Not required.
-
-- run server
-
-``` sh
+``` bash
 npm run mongoose
 ```
 
-- open in browser
+or
 
-``` plain
-http://localhost:3000
+``` bash
+node timetrack-server.js
 ```
+
+Open in browser <http://localhost:3000>

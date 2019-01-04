@@ -2,16 +2,18 @@
 
 ## net-tcp
 
-Example for Net over TCP.
+Example for modules [Net](https://nodejs.org/api/net.html) over TCP ans [Events](https://nodejs.org/api/events.html).
 
-[Net](https://nodejs.org/api/net.html)
+NPM-packages: this is the standard packages.
 
-- NPM-package:
+Run server
 
-This is the standard packages.
-
-- run server
-
-``` sh
+``` bash
 npm run net-tcp
+```
+
+or
+
+``` bash
+node server.js
 ```

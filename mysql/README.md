@@ -2,9 +2,9 @@
 
 ## mysql
 
-Example for MySQL based on "Node.js in Action" (Cantelon, Harter and others).
+Example for MySQL based on example from "Node.js in Action" (Cantelon, Harter and others).
 
-- install MySQL
+First, install MySQL:
 
 ``` sh
 sudo apt install mysql-server
@@ -12,13 +12,11 @@ sudo apt install mysql-server
 
 Also will be installed `mysql-client`.
 
-- NPM-package:
+NPM-packages: [`mysql`](https://github.com/mysqljs/mysql).
 
-`mysql`
+Create database:
 
-- create database
-
-``` sh
+``` bash
 mysql -u root -p
 ```
 
@@ -26,20 +24,22 @@ mysql -u root -p
 create database timetrack;
 ```
 
-- create user
+Create user:
 
 ``` sql
 grant all on timetrack.* to 'timetrack'@'localhost' identified by 'timetrack';
 ```
 
-- run server
+Run server:
 
-``` sh
+``` bash
 npm run mysql
 ```
 
-- open in browser
+or
 
-``` plain
-http://localhost:3000
+``` bash
+node timetrack-server.js
 ```
+
+Open in browser <http://localhost:3000>.

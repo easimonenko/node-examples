@@ -2,40 +2,41 @@
 
 ## redis
 
-Example for Redis based on "Node.js in Action" (Cantelon, Harter and others).
+Example for [Redis](https://redis.io/) based on example "Node.js in Action" (Cantelon, Harter and others).
 
-[Redis](https://redis.io/)
+First, install Redis:
 
-- install Redis
-
-``` sh
+``` bash
 sudo apt install redis-server
 ```
 
 Also will be installed `redis-tools`.
 
-- NPM-package:
+Run Redis:
 
-`redis`, `uuid`
+``` bash
+sudo systemctl start redis
+systemctl status redis
+```
+
+NPM-packages: [`redis`](https://github.com/NodeRedis/node_redis), [`uuid`](https://github.com/kelektiv/node-uuid)
 
 Also will be installed `redis-commands`, `redis-parser`.
 
-- create database
+Create database: not required.
 
-Not required.
+Create user: not required.
 
-- create user
+Run server:
 
-Not required.
-
-- run server
-
-``` sh
+``` bash
 npm run redis
 ```
 
-- open in browser
+or
 
-``` plain
-http://localhost:3000
+``` bash
+node timetrack-server.js
 ```
+
+Open in browser <http://localhost:3000>.

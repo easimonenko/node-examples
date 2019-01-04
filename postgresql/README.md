@@ -2,21 +2,19 @@
 
 ## postgresql
 
-Example for PostgreSQL based on "Node.js in Action" (Cantelon, Harter and others).
+Example for PostgreSQL based on example from "Node.js in Action" (Cantelon, Harter and others).
 
-- install PostgreSQL
+First, install PostgreSQL:
 
 ``` sh
 sudo apt install postgresql postgresql-client postgresql-contrib
 ```
 
-- NPM-package:
+NPM-packages: [`pg`](https://github.com/brianc/node-postgres).
 
-`pg`
+Create database:
 
-- create database
-
-``` sh
+``` bash
 sudo -u postgres psql
 ```
 
@@ -24,21 +22,17 @@ sudo -u postgres psql
 create database timetrack;
 ```
 
-- create user
+Create user:
 
 ``` sql
 create user timetrack with password 'timetrack';
 grant all on database timetrack to timetrack;
 ```
 
-- run server
+Run server:
 
-``` sh
+``` bash
 npm run postgresql
 ```
 
-- open in browser
-
-``` plain
-http://localhost:3000
-```
+Open in browser <http://localhost:3000>

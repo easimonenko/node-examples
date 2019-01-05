@@ -6,7 +6,9 @@ const mongoose = require('mongoose')
 
 const mongoUrl = "mongodb://localhost:27017/timetrack"
 
-mongoose.connect(mongoUrl);
+mongoose.connect(mongoUrl, {
+  useNewUrlParser: true
+})
 
 const WorkSchema = new mongoose.Schema({
   hours: Number,

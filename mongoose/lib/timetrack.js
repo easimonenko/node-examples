@@ -103,7 +103,7 @@ function archive(mongoose, req, res) {
   parseReceivedData(req, (_work) => {
     console.log(_work.id)
     const Work = mongoose.model('Work')
-    Work.update({
+    Work.updateOne({
         '_id': _work.id
       }, {
         'archived': 1

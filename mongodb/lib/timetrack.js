@@ -46,7 +46,7 @@ function actionForm(id, path, label) {
 exports.actionForm = actionForm
 
 /**
- * @param {} db
+ * @param {mongodb.Db} db
  * @param {http.IncomingMessage} req
  * @param {http.ServerResponse} res
  */
@@ -54,7 +54,7 @@ function add(db, req, res) {
   parseReceivedData(req, (work) => {
     console.log(work)
     const collection = db.collection('work')
-    collection.insert(work, (err, result) => {
+    collection.insertOne(work, (err, result) => {
       if (err) {
         throw err
       }
@@ -67,24 +67,28 @@ function add(db, req, res) {
 exports.add = add
 
 /**
- * @param {} db
+ * @param {mongodb.Db} db
  * @param {http.IncomingMessage} req
  * @param {http.ServerResponse} res
  */
 function deleteWork(db, req, res) {
   parseReceivedData(req, (work) => {
-    const collection = db.collection('work')
-    collection.deleteOne({
-        '_id': new mongodb.ObjectID(work.id)
-      },
-      (err, result) => {
-        if (err) {
-          throw err
-        }
-        console.log(result.result)
-        show(db, res)
+    db.collection('work', (err, collection) => {
+      if (err) {
+        throw err
       }
-    )
+
+      collection.deleteOne({
+          '_id': new mongodb.ObjectID(work.id)
+        },
+        (err, result) => {
+          if (err) {
+            throw err
+          }
+          console.log(result.result)
+          show(db, res)
+        })
+    })
   })
 }
 

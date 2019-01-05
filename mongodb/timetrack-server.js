@@ -51,12 +51,14 @@ const server = http.createServer((req, res) => {
   }
 })
 
-client.connect(mongoUrl, (err, connection) => {
+client.connect(mongoUrl, {
+  useNewUrlParser: true
+}, (err, connection) => {
   if (err) {
     throw err
   }
 
-  db = connection
+  db = connection.db()
 
   server.on('close', () => {
     console.log("Close connection to database.")

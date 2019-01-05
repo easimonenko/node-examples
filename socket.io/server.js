@@ -28,7 +28,7 @@ function send404(res) {
  */
 function sendFile(res, filePath, fileContents) {
   res.writeHead(200, {
-    'Content-Type': mime.lookup(path.basename(filePath))
+    'Content-Type': mime.getType(path.basename(filePath))
   })
   res.end(fileContents)
 }

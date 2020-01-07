@@ -6,11 +6,15 @@ const cookieParser = require('cookie-parser')
 const favicon = require('serve-favicon')
 const http = require('http')
 const path = require('path')
+const redis = require('redis')
 const session = require('express-session')
 const serveIndex = require('serve-index')
 const url = require('url')
 
 const RedisStore = connectRedis(session)
+const redisClient = redis.createClient({
+  prefix: 'sid'
+})
 
 const app = connect()
 
@@ -19,7 +23,7 @@ app
   .use(cookieParser('My Secret!'))
   .use(session({
     store: new RedisStore({
-      prefix: 'sid'
+      client: redisClient
     }),
     secret: 'My Secret!'
   }))

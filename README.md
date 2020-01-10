@@ -1,4 +1,4 @@
-# node-examples
+# Node.js Examples
 
 Examples for Node.js.
 
@@ -17,6 +17,8 @@ Examples for Node.js.
 - [FS and ReadLine](./fs-readline/README.md)
 
 - [Net over TCP](./net-tcp/README.md)
+
+- [Request Retry](./request-retry/README.md)
 
 ## License
 

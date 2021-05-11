@@ -14,10 +14,16 @@ Also will be installed `mysql-client`.
 
 NPM-packages: [`mysql`](https://github.com/mysqljs/mysql).
 
+Start server (Ubuntu Linux):
+
+``` bash
+sudo systemctl start mysql.service
+```
+
 Create database:
 
 ``` bash
-mysql -u root -p
+sudo mysql
 ```
 
 ``` sql
@@ -27,7 +33,9 @@ create database timetrack;
 Create user:
 
 ``` sql
-grant all on timetrack.* to 'timetrack'@'localhost' identified by 'timetrack';
+create user 'timetrack'@'localhost';
+grant all on timetrack.* to 'timetrack'@'localhost';
+alter user 'timetrack'@'localhost' identified by 'timetrack';
 ```
 
 Run server:

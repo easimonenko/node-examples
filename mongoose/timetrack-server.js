@@ -7,7 +7,8 @@ const mongoose = require('mongoose')
 const mongoUrl = "mongodb://localhost:27017/timetrack"
 
 mongoose.connect(mongoUrl, {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 })
 
 const WorkSchema = new mongoose.Schema({

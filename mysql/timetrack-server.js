@@ -3,10 +3,14 @@ const work = require('./lib/timetrack')
 const mysql = require('mysql')
 
 const db = mysql.createConnection({
+  host: 'localhost',
   user: 'timetrack',
   password: 'timetrack',
-  database: 'timetrack'
+  database: 'timetrack',
+  insecureAuth: true
 })
+
+db.connect()
 
 const server = http.createServer((req, res) => {
   switch (req.method) {

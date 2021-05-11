@@ -25,7 +25,9 @@ app
     store: new RedisStore({
       client: redisClient
     }),
-    secret: 'My Secret!'
+    saveUninitialized: false,
+    secret: 'My Secret!',
+    resave: false
   }))
   .use(logger)
   .use(rewriteUserName)

@@ -52,7 +52,8 @@ const server = http.createServer((req, res) => {
 })
 
 client.connect(mongoUrl, {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 }, (err, connection) => {
   if (err) {
     throw err

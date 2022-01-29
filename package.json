@@ -5,7 +5,7 @@
   "main": "",
   "scripts": {
     "connect": "nodemon ./connect/server.js",
-    "mysql": "node ./mysql/timetrack-server.js",
+    "mysql": "nodemon ./mysql/timetrack-server.js",
     "postgresql": "node ./postgresql/timetrack-server.js",
     "redis": "node ./redis/timetrack-server.js",
     "mongodb": "node ./mongodb/timetrack-server.js",
@@ -29,7 +29,7 @@
     "mime": "^2.4.0",
     "mongodb": "^3.1.10",
     "mongoose": "^5.4.2",
-    "mysql": "^2.13.0",
+    "mysql": "^2.18.1",
     "pg": "^8.6.0",
     "promise-retry": "^2.0.1",
     "redis": "^4.0.2",

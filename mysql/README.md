@@ -7,12 +7,11 @@ Example for MySQL based on example from "Node.js in Action" (Cantelon, Harter an
 First, install MySQL:
 
 ``` sh
-sudo apt install mysql-server
+sudo apt install mysql-server mysql-client
 ```
 
-Also will be installed `mysql-client`.
-
-NPM-packages: [`mysql`](https://github.com/mysqljs/mysql).
+NPM-packages:
+- [`mysql`](https://github.com/mysqljs/mysql)
 
 Start server (Ubuntu Linux):
 
@@ -35,7 +34,7 @@ Create user:
 ``` sql
 create user 'timetrack'@'localhost';
 grant all on timetrack.* to 'timetrack'@'localhost';
-alter user 'timetrack'@'localhost' identified by 'timetrack';
+alter user 'timetrack'@'localhost' identified with mysql_native_password by 'timetrack';
 ```
 
 Run server:

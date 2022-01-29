@@ -1,6 +1,6 @@
 const http = require('http')
-const work = require('./lib/timetrack')
 const mysql = require('mysql')
+const work = require('./lib/timetrack')
 
 const db = mysql.createConnection({
   host: 'localhost',

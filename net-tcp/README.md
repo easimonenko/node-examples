@@ -2,9 +2,9 @@
 
 ## net-tcp
 
-Example for modules [Net](https://nodejs.org/api/net.html) over TCP ans [Events](https://nodejs.org/api/events.html).
+Example for modules [Net](https://nodejs.org/api/net.html) over TCP and [Events](https://nodejs.org/api/events.html).
 
-NPM-packages: this is the standard packages.
+NPM-packages: only standard packages.
 
 Run server
 
@@ -16,4 +16,10 @@ or
 
 ``` bash
 node server.js
+```
+
+Connect to server with clients:
+
+``` bash
+nc localhost 8888
 ```

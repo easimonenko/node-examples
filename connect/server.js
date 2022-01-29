@@ -9,7 +9,6 @@ const path = require('path')
 const redis = require('redis')
 const session = require('express-session')
 const serveIndex = require('serve-index')
-const url = require('url')
 
 const RedisStore = connectRedis(session)
 const redisClient = redis.createClient({
@@ -73,7 +72,7 @@ function restrict(req, res, next) {
 
   const parts = authorization.split(' ')
   const scheme = parts[0]
-  const [user, pass] = new Buffer(parts[1], 'base64').toString().split(':')
+  const [user, pass] = Buffer.from(parts[1], 'base64').toString().split(':')
 
   authenticateWithDatabase(user, pass, (err) => {
     if (err) {
@@ -124,7 +123,8 @@ function admin(req, res) {
  * @param {*} next
  */
 function rewriteUserName(req, res, next) {
-  const path = url.parse(req.url).pathname
+  const url = new URL(req.url, "http://${req.headers.host")
+  const path = url.pathname
   const match = path.match(/\/users\/(.+)/)
   if (match) {
     findUserIdByUserName(match[1], (err, id) => {

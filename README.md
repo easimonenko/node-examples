@@ -2,6 +2,8 @@
 
 Examples for Node.js.
 
+- [Connect](./connect/README.md)
+
 - [MySQL](./mysql/README.md)
 
 - [PostgreSQL](./postgresql/README.md)

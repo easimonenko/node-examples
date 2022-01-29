@@ -5,9 +5,7 @@
 Example for modules [FS](https://nodejs.org/api/fs.html) and [ReadLine](https://nodejs.org/api/readline.html) as a
 shell command line.
 
-NPM-packages:
-
-This is the standard packages.
+NPM-packages: Only standard packages.
 
 Run server:
 

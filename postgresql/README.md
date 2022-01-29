@@ -10,7 +10,8 @@ First, install PostgreSQL:
 sudo apt install postgresql postgresql-client postgresql-contrib
 ```
 
-NPM-packages: [`pg`](https://github.com/brianc/node-postgres).
+NPM-packages:
+- [`pg`](https://github.com/brianc/node-postgres).
 
 Create database:
 

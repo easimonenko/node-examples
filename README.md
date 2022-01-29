@@ -12,13 +12,13 @@ Examples for Node.js.
 
 - [MySQL](./mysql/README.md)
 
+- [Net over TCP](./net-tcp/README.md)
+
 - [PostgreSQL](./postgresql/README.md)
 
 - [Redis](./redis/README.md)
 
 - [Socket.IO](./socket.io/README.md)
-
-- [Net over TCP](./net-tcp/README.md)
 
 - [Request Retry](./request-retry/README.md)
 

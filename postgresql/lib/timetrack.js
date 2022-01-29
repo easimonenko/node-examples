@@ -127,10 +127,10 @@ function show(db, res, showArchived) {
       throw err
     }
 
-    var html =
-      (showArchived) ?
+    let html = '<meta charset="utf-8"/>\n'+
+      ((showArchived) ?
       '' :
-      '<a href="/archived">Archived Work</a><br/>'
+      '<a href="/archived">Archived Work</a><br/>')
     html += workHitListHtml(dbRes.rows)
     html += workFormHtml()
     sendHtml(res, html)

@@ -1452,7 +1452,7 @@
   dependencies:
     "lodash" "^4.17.19"
 
-"request-promise-native@^1.0.8":
+"request-promise-native@^1.0.9":
   "integrity" "sha512-wcW+sIUiWnKgNY0dqCpOZkUbF/I+YPi+f09JZIDa39Ec+q82CpSYniDp+ISgTTbKmnpJWASeJBPZmoxH84wt3g=="
   "resolved" "https://registry.npmjs.org/request-promise-native/-/request-promise-native-1.0.9.tgz"
   "version" "1.0.9"
@@ -1498,6 +1498,11 @@
   "integrity" "sha1-G0KmJmoh8HQh0bC1S33BZ7AcATs="
   "resolved" "https://registry.npmjs.org/retry/-/retry-0.12.0.tgz"
   "version" "0.12.0"
+
+"retry@^0.13.1":
+  "integrity" "sha512-XQBQ3I8W1Cge0Seh+6gjj03LbmRFWuoszgK9ooCpwYIrhhoO80pfq4cUkU5DkknwfOfFteRwlZ56PYOGYyFWdg=="
+  "resolved" "https://registry.npmjs.org/retry/-/retry-0.13.1.tgz"
+  "version" "0.13.1"
 
 "safe-buffer@^5.0.1", "safe-buffer@^5.1.1", "safe-buffer@^5.1.2", "safe-buffer@5.2.0":
   "integrity" "sha512-fZEwUGbVl7kouZs1jCdMLdt95hdIv0ZeHg6L7qPeciMZhZ+/gdesW4wgTARkrFWEpspjEATAzUGPG8N2jJiwbg=="

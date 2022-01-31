@@ -18,9 +18,9 @@ Examples for Node.js.
 
 - [Redis](./redis/README.md)
 
-- [Socket.IO](./socket.io/README.md)
-
 - [Request Retry](./request-retry/README.md)
+
+- [Socket.IO](./socket.io/README.md)
 
 ## License
 

@@ -8,6 +8,7 @@ Sometimes, due to network failures, the request fails. The usual situation is, i
 
 - [request-retry.js](./request-retry.js) uses `retry` with callback.
 - [request-promise-retry.js](./request-promise-retry.js) uses `promise-retry` with promise.
+  (Apparently no longer needed, since support promiese has appeared in the package `retry`.)
 
 This examples require packages: `retry`, `promise-retry`, `request-promise-native`, `request`.
 

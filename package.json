@@ -11,7 +11,7 @@
     "mysql": "nodemon ./mysql/timetrack-server.js",
     "net-tcp": "nodemon ./net-tcp/server.js",
     "postgresql": "nodemon ./postgresql/timetrack-server.js",
-    "redis": "node ./redis/timetrack-server.js",
+    "redis": "nodemon ./redis/timetrack-server.js",
     "socket.io": "node ./socket.io/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -39,7 +39,7 @@
     "serve-favicon": "^2.4.3",
     "serve-index": "^1.9.0",
     "socket.io": "^2.0.3",
-    "uuid": "^3.1.0"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

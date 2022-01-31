@@ -4,52 +4,58 @@ const http = require('http')
 const work = require('./lib/timetrack')
 const redis = require('redis')
 
-const db = new redis.createClient()
+async function main() {
+  const db = redis.createClient()
 
-db.on('error', (err) => {
-  throw err
-})
+  db.on('error', (err) => {
+    throw err
+  })
 
-const server = http.createServer((req, res) => {
-  switch (req.method) {
-    case 'POST':
-      switch (req.url) {
-        case '/':
-          work.add(db, req, res)
-          break;
+  await db.connect()
 
-        case '/archive':
-          work.archive(db, req, res)
-          break;
+  const server = http.createServer((req, res) => {
+    switch (req.method) {
+      case 'POST':
+        switch (req.url) {
+          case '/':
+            work.add(db, req, res)
+            break;
 
-        case '/delete':
-          work.deleteWork(db, req, res)
-          break;
+          case '/archive':
+            work.archive(db, req, res)
+            break;
 
-        default:
-          break;
-      }
-      break;
+          case '/delete':
+            work.deleteWork(db, req, res)
+            break;
 
-    case 'GET':
-      switch (req.url) {
-        case '/':
-          work.show(db, res)
-          break;
+          default:
+            break;
+        }
+        break;
 
-        case '/archived':
-          work.showArchived(db, res)
-          break;
+      case 'GET':
+        switch (req.url) {
+          case '/':
+            work.show(db, res)
+            break;
 
-        default:
-          break;
-      }
-      break;
+          case '/archived':
+            work.showArchived(db, res)
+            break;
 
-    default:
-      break;
-  }
-})
+          default:
+            break;
+        }
+        break;
 
-console.log('Server started...')
-server.listen(3000)
+      default:
+        break;
+    }
+  })
+
+  console.log('Server started...')
+  server.listen(3000)
+}
+
+main()

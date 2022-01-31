@@ -19,7 +19,9 @@ sudo systemctl start redis
 systemctl status redis
 ```
 
-NPM-packages: [`redis`](https://github.com/NodeRedis/node_redis), [`uuid`](https://github.com/kelektiv/node-uuid)
+NPM-packages:
+- [`redis`](https://github.com/NodeRedis/node_redis)
+- [`uuid`](https://github.com/kelektiv/node-uuid)
 
 Also will be installed `redis-commands`, `redis-parser`.
 

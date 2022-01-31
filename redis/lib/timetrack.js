@@ -20,14 +20,15 @@ exports.sendHtml = sendHtml
 /**
  * @param {http.IncomingMessage} req
  */
-function parseReceivedData(req, cb) {
-  var body = ''
+async function parseReceivedData(req, cb) {
+  let body = ''
   req.setEncoding('utf8')
   req.on('data', (chunk) => {
     body += chunk
   })
   req.on('end', () => {
     const data = querystring.parse(body)
+    console.log(data)
     cb(data)
   })
 }
@@ -51,19 +52,15 @@ exports.actionForm = actionForm
  * @param {http.IncomingMessage} req
  * @param {http.ServerResponse} res
  */
-function add(db, req, res) {
-  parseReceivedData(req, (work) => {
+async function add(db, req, res) {
+  await parseReceivedData(req, async (work) => {
     const workUuid = uuid.v1()
     if (work.archived === undefined) {
       work.archived = 0
     }
-    db.hmset(workUuid, work, (err, reply) => {
-      redis.print(err, reply)
-      if (!err) {
-        db.lpush('work:ids', workUuid, redis.print)
-      }
-      show(db, res)
-    })
+    await db.HSET(workUuid, work)
+    await db.LPUSH('work:ids', workUuid)
+    await show(db, res)
   })
 }
 
@@ -74,16 +71,10 @@ exports.add = add
  * @param {http.IncomingMessage} req
  * @param {http.ServerResponse} res
  */
-function deleteWork(db, req, res) {
-  parseReceivedData(req, (work) => {
-    db.del(
-      work.id,
-      (err, reply) => {
-        redis.print(err, reply)
-
-        show(db, res)
-      }
-    )
+async function deleteWork(db, req, res) {
+  parseReceivedData(req, async (work) => {
+    await db.del(work.id)
+    await show(db, res)
   })
 }
 
@@ -94,31 +85,13 @@ exports.deleteWork = deleteWork
  * @param {http.IncomingMessage} req
  * @param {http.ServerResponse} res
  */
-function archive(db, req, res) {
-  parseReceivedData(req, (work) => {
-    db.hgetall(work.id, (err, oneWork) => {
-      redis.print(err, oneWork)
-
-      if (!err) {
-        db.del(work.id,
-          (err, reply) => {
-            redis.print(err, reply)
-
-            if (!err) {
-              oneWork.archived = 1
-
-              db.hmset(work.id, oneWork, (err, reply) => {
-                redis.print(err, reply)
-
-                if (!err) {
-                  show(db, res)
-                }
-              })
-            }
-          }
-        )
-      }
-    })
+async function archive(db, req, res) {
+  parseReceivedData(req, async (work) => {
+    const oneWork = await db.HGETALL(work.id)
+    await db.del(work.id)
+    oneWork.archived = 1
+    await db.HSET(work.id, oneWork)
+    await show(db, res)
   })
 }
 
@@ -129,42 +102,35 @@ exports.archive = archive
  * @param {http.ServerResponse} res
  * @param {boolean} showArchived
  */
-function show(db, res, showArchived) {
+async function show(db, res, showArchived) {
   const archiveValue = (showArchived) ? 1 : 0
 
-  db.lrange('work:ids', 0, -1, (err, items) => {
-    if (err) {
-      throw err
-    }
+  const items = await db.LRANGE('work:ids', 0, -1)
 
-    var work = []
+    const work = []
 
     if (items.length == 0) {
       console.log('Empty list.')
     }
 
-    var counter = 0;
+    let counter = 0;
 
-    items.forEach((item, i) => {
+    items.forEach(async (item, i) => {
       console.log(i + ": " + item + "\n")
-      db.hgetall(item, (err, oneWork) => {
-        if (err) {
-          throw err
-        }
-        counter += 1
-        if (oneWork && oneWork.archived == archiveValue) {
-          oneWork.id = item
-          work.push(oneWork)
-        }
-      })
+      const oneWork = await db.HGETALL(item)
+      counter += 1
+      if (oneWork && oneWork.archived == archiveValue) {
+        oneWork.id = item
+        work.push(oneWork)
+      }
     })
 
     setTimeout(function repeat() {
       if (counter == items.length) {
-        var html =
-          (showArchived) ?
+        let html = '<meta charset="utf-8"/>\n' +
+          ((showArchived) ?
           '' :
-          '<a href="/archived">Archived Work</a><br/>'
+          '<a href="/archived">Archived Work</a><br/>')
         html += workHitListHtml(work)
         html += workFormHtml()
         sendHtml(res, html)
@@ -172,7 +138,6 @@ function show(db, res, showArchived) {
         setTimeout(repeat, 0)
       }
     }, 0)
-  })
 }
 
 exports.show = show
